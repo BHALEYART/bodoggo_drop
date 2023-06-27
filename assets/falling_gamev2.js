@@ -44,11 +44,13 @@ var isPlayerImmune = false;
 var immuneDuration = 10; // Duration of player immunity in seconds
 var immunityTimer = 0; // Remaining time for player immunity
 
+
 var backgroundMusic = new Audio("assets/game_music.mp3");
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.1;
-backgroundMusic.play();
-
+var immuneMusic = new Audio("assets/immune_music.mp3");
+immuneMusic.loop = false;
+immuneMusic.volume = 0.3;
 var goodItemSound = new Audio("assets/point_sound.mp3");
 var badItemSound = new Audio("assets/damage_sound.mp3");
 badItemSound.volume = 0.7;
@@ -64,26 +66,24 @@ restartButton.style.top = "70%";
 restartButton.style.transform = "translate(-50%, -50%)";
 restartButton.style.width = "100px";
 restartButton.style.height = "40px";
-restartButton.style.backgroundColor = "blue";
-restartButton.style.color = "white";
-restartButton.style.border = "black";
+restartButton.style.backgroundColor = "orange";
+restartButton.style.color = "black";
+restartButton.style.border = "none";
 restartButton.style.borderRadius = "5px";
 restartButton.style.zIndex = "9999";
 
-watchButton.innerText = "Join BoDoggos";
+watchButton.innerText = "BHB Links";
 watchButton.style.position = "absolute";
 watchButton.style.left = "50%";
 watchButton.style.top = "80%";
 watchButton.style.transform = "translate(-50%, -50%)";
 watchButton.style.width = "100px";
 watchButton.style.height = "40px";
-watchButton.style.backgroundColor = "blue";
-watchButton.style.color = "white";
-watchButton.style.border = "black";
+watchButton.style.backgroundColor = "orange";
+watchButton.style.color = "black";
+watchButton.style.border = "none";
 watchButton.style.borderRadius = "5px";
 watchButton.style.zIndex = "9999";
-
-
 
 // Load images
 gameOverPileImage.src = "assets/game_over_pile.png";
@@ -158,6 +158,7 @@ function checkCollision() {
     ) {
       maxItems += 1;
       score += 100;
+      immuneMusic.play();
       isPlayerImmune = true;
       immunityTimer = immuneDuration;
       surpriseItems.splice(i, 1); // Remove the collided surprise item
@@ -218,14 +219,16 @@ function update() {
   // Draw player
   if (isPlayerImmune) {
     ctx.drawImage(playerImage, playerX, playerY, playerWidth, playerHeight);
+    immuneMusic.volume = 0.3;
   } else {
     ctx.drawImage(
       playerImageOriginal,
       playerX,
       playerY,
       playerWidth,
-      playerHeight
+      playerHeight,
     );
+    immuneMusic.volume = 0;
   }
 
   // Draw good items
@@ -339,18 +342,26 @@ if (isPlayerImmune) {
     isGameOver = true;
     ctx.drawImage(
       gameOverImage,
-      canvas.width / 2 - 250,
-      canvas.height / 2 - 250,
-      500,
-      500
+      canvas.width / 2 - 150,
+      canvas.height / 2 - 150,
+      300,
+      300
     );
-    if (score < 10000) {
+    if (score < 1000) {
         lowScoreSound.play();
       } else {
         highScoreSound.play();
       }
     document.body.appendChild(restartButton);
     document.body.appendChild(watchButton);
+    ctx.drawImage(
+      gameOverPileImage,
+      -70,                          // X-coordinate of the image's top-left corner
+      320,        // Y-coordinate of the image's top-left corner
+      600,               // Width of the image
+      600                         // Height of the image
+    );
+    
     return; // Exit the update function
     
   }
@@ -387,7 +398,7 @@ restartButton.addEventListener("click", function () {
 
 // Add click event listener to URL button
 watchButton.addEventListener("click", function() {
-    window.location.href = ("https://twitter.com/BoDoggosNFT"); // Replace with your desired URL
+    window.location.href = ("https://bombpop.link/bigheadbillions"); // Replace with your desired URL
   });
 
 // Handle mouse movement
@@ -396,8 +407,15 @@ canvas.addEventListener("mousemove", function (event) {
   playerX = event.clientX - rect.left - playerWidth / 2;
 });
 
+// Define a function to play background music
+function playBackgroundMusic() {
+  if(itemSpeed >= 2.1){
+    backgroundMusic.play();
+  }
+}
 
 // Start the game loop
 resetItems();
+setTimeout(playBackgroundMusic, 1000); // Play background music after 1 second
 update();
 
