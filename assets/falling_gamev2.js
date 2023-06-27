@@ -66,20 +66,20 @@ restartButton.style.top = "70%";
 restartButton.style.transform = "translate(-50%, -50%)";
 restartButton.style.width = "100px";
 restartButton.style.height = "40px";
-restartButton.style.backgroundColor = "orange";
+restartButton.style.backgroundColor = "blue";
 restartButton.style.color = "black";
 restartButton.style.border = "none";
 restartButton.style.borderRadius = "5px";
 restartButton.style.zIndex = "9999";
 
-watchButton.innerText = "BHB Links";
+watchButton.innerText = "Bodoggos";
 watchButton.style.position = "absolute";
 watchButton.style.left = "50%";
 watchButton.style.top = "80%";
 watchButton.style.transform = "translate(-50%, -50%)";
 watchButton.style.width = "100px";
 watchButton.style.height = "40px";
-watchButton.style.backgroundColor = "orange";
+watchButton.style.backgroundColor = "blue";
 watchButton.style.color = "black";
 watchButton.style.border = "none";
 watchButton.style.borderRadius = "5px";
@@ -398,7 +398,7 @@ restartButton.addEventListener("click", function () {
 
 // Add click event listener to URL button
 watchButton.addEventListener("click", function() {
-    window.location.href = ("https://bombpop.link/bigheadbillions"); // Replace with your desired URL
+    window.location.href = ("https://twitter.com/BoDoggosNFT"); // Replace with your desired URL
   });
 
 // Handle mouse movement
